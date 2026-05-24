@@ -456,10 +456,12 @@ export class Game {
         this.score = 0;
         this.level = 0;
         this.lives = 3;
+        this._gameStartTime = performance.now();
         this._setupRound();
         this._playMusic('gameMusic');
         this.onStateChange?.();
         this.onScoreChange?.();
+        if (typeof gtag === 'function') gtag('event', 'game_start', { game_name: window.GAME_NAME || 'tap-and-pop' });
     }
 
     _randomSize(minSize, maxSize) {
@@ -579,6 +581,15 @@ export class Game {
         this._saveHighScore(this.score);
         this.state = State.GAME_OVER;
         this.onStateChange?.();
+        if (typeof gtag === 'function') {
+            const timePlayed = Math.round((performance.now() - (this._gameStartTime || performance.now())) / 1000);
+            gtag('event', 'game_over', {
+                game_name: window.GAME_NAME || 'tap-and-pop',
+                score: this.score,
+                level_reached: this.level,
+                time_played_seconds: timePlayed
+            });
+        }
     }
 
     goToMenu() {
