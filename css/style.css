@@ -679,6 +679,16 @@ html, body {
     display: flex; gap: 10px; align-items: center;
 }
 
+/* ===== Creator Credit ===== */
+.menu-credit {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: rgba(148, 163, 184, 0.55);
+}
+
 /* ===== How to Play Button ===== */
 .btn-how-to-play {
     display: block;
